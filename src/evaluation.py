@@ -6,7 +6,7 @@ from colbert.utils.utils import print_message, file_tqdm
 
 
 def get_bin(length, min_length, max_length, bin_width):
-    if length == max_length:
+    if length >= max_length:
         return 9  # Ensure the maximum length goes in the last bin
     return min(int((length - min_length) / bin_width), 9)
 
@@ -20,7 +20,7 @@ def main(args):
             pid2length[int(doc_id)] = int(num_words)
 
     min_length = min(pid2length.values())
-    max_length = max(pid2length.values())
+    max_length = min(max(pid2length.values()), 512)
     bin_width = (max_length - min_length) / 10
 
     qid2positives = defaultdict(list)
@@ -94,12 +94,12 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="msmarco_passages.")
+    parser = ArgumentParser(description="msmarco_passages")
 
     # Input Arguments.
-    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/docs/downloads/msmarco_passage/qrels.dev.tsv")
-    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_passage/retrieval/2023-08/14/03.59.59/msmarco.nbits=2.dev.ranking.tsv")
-    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/msmarco_passage_doc_lengths.tsv")
+    parser.add_argument('--qrels', dest='qrels', type=str, default="./docs/downloads/msmarco_docs/qrels.tsv")
+    parser.add_argument('--ranking', dest='ranking', type=str, default="./experiments/msmarco_docs/retrieval/2023-08/21/01.59.03/msmarco.nbits=2.dev.ranking.tsv")
+    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="./src/data/msmarco_docs_doc_lengths.tsv")
     parser.add_argument('--annotate', dest='annotate', default=False, action='store_true')
 
     args = parser.parse_args()
@@ -108,6 +108,6 @@ if __name__ == "__main__":
         args.output = f'{args.ranking}.annotated'
         assert not os.path.exists(args.output), args.output
     else:
-        args.output = 'evaluation_by_length_bins.txt'
+        args.output = 'evaluation_by_length_bins_docs.txt' #TODO: change the naming
 
     main(args)
