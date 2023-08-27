@@ -22,7 +22,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Count words")
+    parser = ArgumentParser(description="Indexing parser")
 
     # Input Arguments.
     parser.add_argument('--collection_path', dest='collection_path', default='./docs/downloads/msmarco_passage/collection.tsv', type=str)

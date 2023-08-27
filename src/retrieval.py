@@ -16,7 +16,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="Count words")
+    parser = ArgumentParser(description="Retrieval parser")
 
     # Input Arguments.
     parser.add_argument('--queries_path', dest='queries_path', default='./docs/downloads/msmarco_passage/queries_small.tsv', type=str)

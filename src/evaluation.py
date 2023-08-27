@@ -1,8 +1,10 @@
+#TODO: double check this code
 import os
 import tqdm
 from argparse import ArgumentParser
 from collections import defaultdict
 from colbert.utils.utils import print_message, file_tqdm
+from settings import RESULTS_DIR
 
 
 def get_bin(length, min_length, max_length, bin_width):
@@ -55,6 +57,7 @@ def main(args):
         ranking = qid2ranking[qid]
         positives = qid2positives[qid]
 
+        # MRR
         for rank, (_, pid, _) in enumerate(ranking):
             rank = rank + 1  # 1-indexed
 
@@ -64,6 +67,7 @@ def main(args):
                     qid2mrr[bin_id][qid] = 1.0 / rank
                 break
 
+        # Recall
         for rank, (_, pid, _) in enumerate(ranking):
             rank = rank + 1  # 1-indexed
 
@@ -74,7 +78,7 @@ def main(args):
                         qid2recall[depth][bin_id][qid] = qid2recall[depth][bin_id].get(qid, 0) + 1.0 / len(positives)
 
     # Save the results per bin
-    with open(args.output, 'w') as out_file:
+    with open(os.path.join(RESULTS_DIR, args.output), 'w') as out_file:
         for bin_id in range(10):
             mrr_values = qid2mrr[bin_id]
             mrr_10_sum = sum(mrr_values.values())
@@ -83,6 +87,7 @@ def main(args):
             bin_end = bin_start + bin_width
 
             out_file.write(f"Bin {bin_id+1} (Length {bin_start}-{bin_end}):\n")
+            out_file.write(f"Number of docs: {len(mrr_values)}\n") #TODO: check this, is it number of docs or number of queries?
             out_file.write(f"MRR@10 = {mrr_10_sum / len(mrr_values) if len(mrr_values) > 0 else 0}\n")
 
             for depth in [10, 100]:
@@ -94,7 +99,7 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description="msmarco_passages")
+    parser = ArgumentParser(description="evaluation parser")
 
     # Input Arguments.
     parser.add_argument('--qrels', dest='qrels', type=str, default="./docs/downloads/msmarco_docs/qrels.tsv")
