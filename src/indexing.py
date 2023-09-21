@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0, '../../')
+
+sys.path.append( '/gpfs/home3/sgarcarz/PycharmProjects/ColBERT' )
 
 from argparse import ArgumentParser
 

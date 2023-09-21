@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --partition=gpu
+#SBATCH --gpus-per-node=4
+#SBATCH --ntasks=1
+#SBATCH --job-name=MSMARCO_RETRIEVAL_256
+#SBATCH --time=08:00:00
+#SBATCH --output=MSMARCO_RETRIEVAL_256.out
+#SBATCH -e Retrieval_Errors_256.err
+#SBATCH --exclusive
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+module load CUDA/11.7.0
+
+eval "$(conda shell.bash hook)"
+# Activate your environment
+source activate colbert
+# Run your code
+echo starting the job
+cd $HOME/PycharmProjects/ColBERT
+srun python src/retrieval.py --queries_path "/gpfs/work5/0/gusr0664/data/msmarco_docs/queries.tsv" --index_name "/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_docs_256_finetuned/indexes/msmarco_docs.2bits"  --experiment "msmarco_docs_256_finetuned"
+

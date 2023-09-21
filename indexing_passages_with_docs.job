@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --partition=gpu
+#SBATCH --gpus-per-node=4
+#SBATCH --ntasks=1
+#SBATCH --job-name=MSMARCO_INDEXING_PASSAGE_WITH_DOCS
+#SBATCH --time=12:00:00
+#SBATCH --output=MSMARCO_INDEXING_PASSAGE_WITH_DOCS.out
+#SBATCH -e Indexing_Errors_Passage_with_Docs.err
+#SBATCH --exclusive
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+module load CUDA/11.7.0
+
+eval "$(conda shell.bash hook)"
+# Activate your environment
+source activate colbert
+# Run your code
+echo starting the job
+cd $HOME/PycharmProjects/ColBERT
+srun python src/indexing.py --collection_path "/gpfs/work5/0/gusr0664/data/msmarco_passage/collection.tsv" --checkpoint_path "./experiments/msmarco_docs_finetuning_512/none/2023-09/03/18.39.30/checkpoints/colbert" --dataset "msmarco_passage" --experiment "msmarco_passage_with_docs"
+

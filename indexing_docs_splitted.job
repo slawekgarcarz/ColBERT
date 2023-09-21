@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --partition=gpu
+#SBATCH --gpus-per-node=4
+#SBATCH --ntasks=1
+#SBATCH --job-name=MSMARCO_INDEXING_SPLITTED
+#SBATCH --time=12:00:00
+#SBATCH --output=MSMARCO_INDEXING_SPLITTED.out
+#SBATCH -e Indexing_Errors_Splitted.err
+#SBATCH --exclusive
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+module load CUDA/11.7.0
+
+eval "$(conda shell.bash hook)"
+# Activate your environment
+source activate colbert
+# Run your code
+echo starting the job
+cd $HOME/PycharmProjects/ColBERT
+srun python src/indexing.py --collection_path "./docs/downloads/msmarco_docs/collection_original_sliced_499_100.tsv" --checkpoint_path "./experiments/msmarco_docs_finetuning_512/none/2023-09/03/18.39.30/checkpoints/colbert" --dataset "msmarco_docs" --experiment "msmarco_docs_512_splitted"
+

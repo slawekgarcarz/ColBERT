@@ -102,9 +102,9 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="evaluation parser")
 
     # Input Arguments.
-    parser.add_argument('--qrels', dest='qrels', type=str, default="./docs/downloads/msmarco_docs/qrels.tsv")
-    parser.add_argument('--ranking', dest='ranking', type=str, default="./experiments/msmarco_docs/retrieval/2023-08/21/01.59.03/msmarco.nbits=2.dev.ranking.tsv")
-    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="./src/data/msmarco_docs_doc_lengths.tsv")
+    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/qrels.tsv")
+    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_docs_512_finetuned/src.retrieval/2023-09/15/10.36.56/msmarco_docs_512_finetuned_1000_ranking_small.tsv")
+    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths.tsv")
     parser.add_argument('--annotate', dest='annotate', default=False, action='store_true')
 
     args = parser.parse_args()
@@ -113,6 +113,6 @@ if __name__ == "__main__":
         args.output = f'{args.ranking}.annotated'
         assert not os.path.exists(args.output), args.output
     else:
-        args.output = 'evaluation_by_length_bins_docs.txt' #TODO: change the naming
+        args.output = 'evaluation_by_length_bins_docs_512.txt' #TODO: change the naming
 
     main(args)

@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --partition=gpu
+#SBATCH --gpus-per-node=4
+#SBATCH --ntasks=1
+#SBATCH --job-name=MSMARCO_TRAINING_512
+#SBATCH --time=24:00:00
+#SBATCH --output=MSMARCO_TRAINING_512.out
+#SBATCH -e Errors_512.err
+#SBATCH --exclusive
+
+module purge
+module load 2022
+module load Anaconda3/2022.05
+module load CUDA/11.7.0
+
+eval "$(conda shell.bash hook)"
+# Activate your environment
+source activate colbert
+# Run your code
+echo starting the job
+cd $HOME/PycharmProjects/ColBERT
+srun python src/train.py --doc_maxlen 512 --experiment "msmarco_docs_finetuning_512" --maxsteps 200000
