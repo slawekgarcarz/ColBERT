@@ -5,8 +5,8 @@
 #SBATCH --ntasks=1
 #SBATCH --job-name=MSMARCO_RETRIEVAL_PASSAGE_WITH_DOCS
 #SBATCH --time=08:00:00
-#SBATCH --output=MSMARCO_RETRIEVAL_512.out
-#SBATCH -e Retrieval_Errors_512.err
+#SBATCH --output=MSMARCO_RETRIEVAL_PASSAGE_WITH_DOCS.out
+#SBATCH -e Retrieval_Errors_Passage_with_docs.err
 #SBATCH --exclusive
 
 module purge
@@ -20,5 +20,5 @@ source activate colbert
 # Run your code
 echo starting the job
 cd $HOME/PycharmProjects/ColBERT
-srun python src/retrieval.py --queries_path "/gpfs/work5/0/gusr0664/data/msmarco_passage/queries_small.tsv" --index_name "/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_passage_with_docs/indexes/msmarco_docs.2bits"  --experiment "msmarco_passage_with_docs"
+srun python src/retrieval.py --queries_path "/gpfs/work5/0/gusr0664/data/msmarco_passage/queries_small.tsv" --index_name "/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_passage_with_docs/indexes/msmarco_passage.2bits"  --experiment "msmarco_passage_with_docs"
 
