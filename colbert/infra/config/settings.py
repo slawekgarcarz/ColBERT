@@ -165,8 +165,8 @@ class IndexingSettings:
 
     @property
     def index_path_(self):
-        # return self.index_path or os.path.join(self.index_root_, self.index_name)
-        return self.index_path or os.path.join('/gpfs/work5/0/gusr0664/experiments', self.index_name)
+        return self.index_path or os.path.join(self.index_root_, self.index_name)
+        # return self.index_path or os.path.join('/gpfs/work5/0/gusr0664/experiments', self.index_name)
 
 
 @dataclass
