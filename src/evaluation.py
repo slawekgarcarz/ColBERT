@@ -102,9 +102,9 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="evaluation parser")
 
     # Input Arguments.
-    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_passage/qrels_small.tsv")
-    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_passage_prefix/src.retrieval/2023-09/27/21.31.01/msmarco_passage_prefix_1000_ranking_small.tsv")
-    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_passage_doc_lengths.tsv")
+    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/qrels.tsv")
+    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_docs_with_summaries/src.retrieval/2023-10/21/12.14.52/msmarco_docs_with_summaries_1000_ranking_small.tsv")
+    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths.tsv")
     parser.add_argument('--annotate', dest='annotate', default=False, action='store_true')
 
     args = parser.parse_args()
@@ -113,6 +113,6 @@ if __name__ == "__main__":
         args.output = f'{args.ranking}.annotated'
         assert not os.path.exists(args.output), args.output
     else:
-        args.output = 'evaluation_passage_prefix.txt' #TODO: change the naming
+        args.output = 'evaluation_passage_doc_sum.txt' #TODO: change the naming
 
     main(args)
