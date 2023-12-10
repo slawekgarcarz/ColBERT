@@ -4,7 +4,7 @@ import tqdm
 from argparse import ArgumentParser
 from collections import defaultdict
 from colbert.utils.utils import print_message, file_tqdm
-from settings import RESULTS_DIR
+from settings import RESULTS_DIR, CORRECT_RESULTS_DIR
 
 
 def get_bin(length, min_length, max_length, bin_width):
@@ -65,7 +65,10 @@ def main(args):
                 bin_id = get_bin(pid2length[pid], min_length, max_length, bin_width)
                 if rank <= 10:
                     qid2mrr[bin_id][qid] = 1.0 / rank
+                else:
+                    qid2mrr[bin_id][qid] = 0.0
                 break
+
 
         # Recall
         for rank, (_, pid, _) in enumerate(ranking):
@@ -78,7 +81,7 @@ def main(args):
                         qid2recall[depth][bin_id][qid] = qid2recall[depth][bin_id].get(qid, 0) + 1.0 / len(positives)
 
     # Save the results per bin
-    with open(os.path.join(RESULTS_DIR, args.output), 'w') as out_file:
+    with open(os.path.join(CORRECT_RESULTS_DIR, args.output), 'w') as out_file:
         for bin_id in range(10):
             mrr_values = qid2mrr[bin_id]
             mrr_10_sum = sum(mrr_values.values())
@@ -102,9 +105,9 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="evaluation parser")
 
     # Input Arguments.
-    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/qrels.tsv")
-    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_passage_with_summaries/src.retrieval/2023-10/23/11.26.57/msmarco_passage_with_summaries_1000_ranking_small.tsv")
-    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths.tsv")
+    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/splitted_qrels.tsv")
+    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/work5/0/gusr0664/experiments/msmarco_docs_splitted/src.retrieval/2023-09/25/21.17.33/msmarco_docs_splitted_1000_ranking_small.tsv")
+    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths_splitted.tsv")
     parser.add_argument('--annotate', dest='annotate', default=False, action='store_true')
 
     args = parser.parse_args()
@@ -113,6 +116,6 @@ if __name__ == "__main__":
         args.output = f'{args.ranking}.annotated'
         assert not os.path.exists(args.output), args.output
     else:
-        args.output = 'evaluation_passage_sum.txt' #TODO: change the naming
+        args.output = 'evaluation_docs_splitted.txt' #TODO: change the naming
 
     main(args)
