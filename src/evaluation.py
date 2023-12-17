@@ -105,9 +105,9 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="evaluation parser")
 
     # Input Arguments.
-    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/splitted_qrels.tsv")
-    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/work5/0/gusr0664/experiments/msmarco_docs_splitted/src.retrieval/2023-09/25/21.17.33/msmarco_docs_splitted_1000_ranking_small.tsv")
-    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths_splitted.tsv")
+    parser.add_argument('--qrels', dest='qrels', type=str, default="/gpfs/work5/0/gusr0664/data/msmarco_docs/qrels.tsv")
+    parser.add_argument('--ranking', dest='ranking', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/experiments/msmarco_docs/src.retrieval/2023-12/13/02.06.24/msmarco_docs_1000_ranking_small.tsv")
+    parser.add_argument('--doc_lengths_tsv', dest='doc_lengths_tsv', type=str, default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/src/data/msmarco_docs_doc_lengths.tsv")
     parser.add_argument('--annotate', dest='annotate', default=False, action='store_true')
 
     args = parser.parse_args()

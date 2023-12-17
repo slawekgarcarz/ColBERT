@@ -26,12 +26,12 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="Indexing parser")
 
     # Input Arguments.
-    parser.add_argument('--collection_path', dest='collection_path', default='./docs/downloads/msmarco_passage/collection.tsv', type=str)
+    parser.add_argument('--collection_path', dest='collection_path', default='./docs/downloads/msmarco_docs/collection.tsv', type=str)
     parser.add_argument('--checkpoint_path', dest='checkpoint_path', default='./docs/downloads/colbertv2.0', type=str)
-    parser.add_argument('--dataset', dest='dataset', default='msmarco_passage', type=str) # msmarco_passage or msmarco_docs
-    parser.add_argument('--experiment', dest='experiment', default='msmarco_passage', type=str) # msmarco_passage or msmarco_docs
+    parser.add_argument('--dataset', dest='dataset', default='msmarco_docs', type=str) # msmarco_passage or msmarco_docs
+    parser.add_argument('--experiment', dest='experiment', default='msmarco_docs', type=str) # msmarco_passage or msmarco_docs
     parser.add_argument('--nbits', dest='nbits', default=2, type=int)
-    parser.add_argument('--doc_maxlen', dest='doc_maxlen', default=512, type=int)
+    parser.add_argument('--doc_maxlen', dest='doc_maxlen', default=256, type=int)
 
     args = parser.parse_args()
 
