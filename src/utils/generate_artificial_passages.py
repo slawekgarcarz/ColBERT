@@ -37,29 +37,34 @@ def main():
     prefix_collection = {}
     postfix_collection = {}
     random_collection = {}
-    for i in tqdm(range(len(relevant_docs))):
-        doc_id = relevant_docs[i]
-        random_doc_id = random.sample(non_relevant_docs, 1)[0]
-        relevant_doc = collection[doc_id].split(' ')
-        non_relevant_doc = collection[random_doc_id].split(' ')
+    for i in tqdm(collection.keys()):
+        if i not in relevant_docs:
+            prefix_collection[i] = collection[i]
+            postfix_collection[i] = collection[i]
+            random_collection[i] = collection[i]
+        else:
+            doc_id = i
+            random_doc_id = random.sample(non_relevant_docs, 1)[0]
+            relevant_doc = collection[doc_id].split(' ')
+            non_relevant_doc = collection[random_doc_id].split(' ')
 
-        while len(non_relevant_doc) < 450:
-            non_relevant_doc = non_relevant_doc + collection[random.sample(non_relevant_docs, 1)[0]].split(' ')
+            while len(non_relevant_doc) < 450:
+                non_relevant_doc = non_relevant_doc + collection[random.sample(non_relevant_docs, 1)[0]].split(' ')
 
-        n = len(relevant_doc)
+            n = len(relevant_doc)
 
-        prefix = non_relevant_doc.copy()
-        postfix = non_relevant_doc.copy()
-        random_place = non_relevant_doc.copy()
+            prefix = non_relevant_doc.copy()
+            postfix = non_relevant_doc.copy()
+            random_place = non_relevant_doc.copy()
 
-        prefix[-n:] = relevant_doc
-        postfix[:n] = relevant_doc
-        x = random.randint(0, len(non_relevant_doc) - n)
-        random_place[x:x + n] = relevant_doc
+            prefix[-n:] = relevant_doc
+            postfix[:n] = relevant_doc
+            x = random.randint(0, len(non_relevant_doc) - n)
+            random_place[x:x + n] = relevant_doc
 
-        prefix_collection[doc_id] = ' '.join(prefix)
-        postfix_collection[doc_id] = ' '.join(postfix)
-        random_collection[doc_id] = ' '.join(random_place)
+            prefix_collection[doc_id] = ' '.join(prefix)
+            postfix_collection[doc_id] = ' '.join(postfix)
+            random_collection[doc_id] = ' '.join(random_place)
 
     with open('/Users/slawek/PycharmProjects/ColBERT/docs/downloads/msmarco_passage/prefix_collection.tsv', 'w') as f:
         for doc_id in prefix_collection:
