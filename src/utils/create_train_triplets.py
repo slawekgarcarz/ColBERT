@@ -60,10 +60,10 @@ if __name__ == "__main__":
                         type=str)
 
     parser.add_argument('--relevant_pairs', dest='relevant_pairs',
-                        default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/docs/downloads/msmarco_docs/cedr_mcds_100_50_0_5_0_s0_bitext_2021-11-17/text_raw/train_pairs.tsv",
+                        default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/docs/downloads/msmarco_docs/train_triplets.tsv",
                         type=str)
     parser.add_argument('--output_path', dest='output_path',
-                        default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/docs/downloads/msmarco_docs/training_triplets.tsv",
+                        default="/gpfs/home3/sgarcarz/PycharmProjects/ColBERT/docs/downloads/msmarco_docs/dupa.tsv",
                         type=str, help='Output path')
 
     args = parser.parse_args()
